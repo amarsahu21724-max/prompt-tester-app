@@ -27,17 +27,16 @@ export const Route = createFileRoute("/")({
 type GenerateResult = Awaited<ReturnType<typeof generatePrompt>>;
 
 const MODELS = [
-  { value: "openai", label: "OpenAI GPT" },
   { value: "gemini", label: "Google Gemini" },
 ] as const;
 
 function Index() {
   const [prompt, setPrompt] = useState("");
-  const [model, setModel] = useState<"openai" | "gemini">("openai");
+  const [model, setModel] = useState<"gemini">("gemini");
   const [error, setError] = useState<string | null>(null);
 
   const generateFn = useServerFn(generatePrompt);
-  const mutation = useMutation<GenerateResult, Error, { prompt: string; model: "openai" | "gemini" }>({
+  const mutation = useMutation<GenerateResult, Error, { prompt: string; model: "gemini" }>({
     mutationFn: (vars) => generateFn({ data: vars }),
     onError: (err) => setError(err.message),
     onSuccess: () => setError(null),
@@ -95,7 +94,7 @@ function Index() {
                 <select
                   id="model"
                   value={model}
-                  onChange={(e) => setModel(e.target.value as "openai" | "gemini")}
+                  onChange={(e) => setModel(e.target.value as "gemini")}
                   disabled={isLoading}
                   className="rounded-lg border border-border bg-input px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
                 >

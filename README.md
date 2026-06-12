@@ -19,7 +19,7 @@ This project runs on the Lovable platform, which provides a single integrated st
 - **TanStack Query** for client data
 - **Server functions** (`createServerFn`) instead of a separate Express server —
   same idea (HTTP boundary between browser and server), simpler to run
-- **Lovable AI Gateway** for calling OpenAI / Gemini through one managed key
+- **Google Gemini API** for sending prompts directly with your own API key
 
 > The original brief asked for `client/` + `server/` (Express) + a root `.env`.
 > On Lovable, the platform provides the server runtime, so the equivalent
@@ -29,12 +29,12 @@ This project runs on the Lovable platform, which provides a single integrated st
 
 ## Where the secret lives
 
-The AI key (`LOVABLE_API_KEY`) is stored as a **server-side environment
-variable** by Lovable Cloud. It is read **only inside the server function**:
+The AI key (`GEMINI_API_KEY`) is stored as a **server-side environment
+variable**. It is read **only inside the server function**:
 
 ```ts
 // src/lib/generate.functions.ts
-const apiKey = process.env.LOVABLE_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY;
 ```
 
 It is never bundled into the browser. This is exactly why real apps use `.env`
@@ -47,7 +47,7 @@ npm install
 npm run dev
 ```
 
-Open the preview URL shown by Lovable.
+Open the local preview URL shown in your terminal.
 
 ## Files to read with students
 
@@ -55,7 +55,7 @@ Open the preview URL shown by Lovable.
   API-usage panel, learning corner)
 - `src/lib/generate.functions.ts` — the "backend": validates input, reads the
   API key, calls the AI model, returns a JSON response
-- `src/lib/ai-gateway.server.ts` — thin wrapper that talks to the AI provider
+- `src/lib/gemini.server.ts` — thin wrapper that calls the Gemini API
 
 ## Talking points
 
